@@ -36,3 +36,44 @@ Recommendation is to add a new migration file for instance:
         }
     }
 ```
+
+Example 1:
+```
+		string schemaName = "History";
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.EnsureSchema(name: schemaName);
+            //Add temporal on specific table
+            migrationBuilder.AddAsTemporalTable(this.TargetModel.FindEntityType(typeof(Entities.Common.Customer).FullName), schemaName);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.EnsureSchema(name: schemaName);
+            //Remove temporal on specific table
+            migrationBuilder.RemoveAsTemporalTable(this.TargetModel.FindEntityType(typeof(Entities.Common.Customer).FullName), schemaName);
+        }
+```
+Example 2:
+```
+		string schemaName = "History";
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.EnsureSchema(name: schemaName);
+            //Add temporal on all tables
+            foreach (var entity in this.TargetModel.GetEntityTypes())
+            {
+                migrationBuilder.AddAsTemporalTable(entity, schemaName);
+            }
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.EnsureSchema(name: schemaName);
+            //Remove temporal on all tables
+            foreach (var entity in this.TargetModel.GetEntityTypes())
+            {
+               migrationBuilder.RemoveAsTemporalTable(entity, schemaName); 
+            }
+        }
+```
