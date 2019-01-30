@@ -41,7 +41,7 @@ namespace EFCoreTemporalSupport
             migrationBuilder.Sql(alterStatement);
             alterStatement = $@"ALTER TABLE [{tableName}] DROP PERIOD FOR SYSTEM_TIME";
             migrationBuilder.Sql(alterStatement);
-            alterStatement = $@"ALTER TABLE [{tableName}] DROP CONSTRAINT DF_{tableName}_SysStart, DF_{tableName}_SysEnd";
+            alterStatement = $@"ALTER TABLE [{tableName}] DROP CONSTRAINT DF_{tableName}_ValidFrom, DF_{tableName}_ValidTo";
             migrationBuilder.Sql(alterStatement);
             alterStatement = $@"ALTER TABLE [{tableName}] DROP COLUMN ValidFrom, COLUMN ValidTo";
             migrationBuilder.Sql(alterStatement);
